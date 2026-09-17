@@ -1,98 +1,116 @@
-import * as Device from 'expo-device';
-import { Platform, StyleSheet } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { Link } from "expo-router";
+import { useState } from "react";
+import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { Ionicons } from "@expo/vector-icons";
 
-import { AnimatedIcon } from '@/components/animated-icon';
-import { HintRow } from '@/components/hint-row';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { WebBadge } from '@/components/web-badge';
-import { BottomTabInset, MaxContentWidth, Spacing } from '@/constants/theme';
+export default function Index() {
+  const [counter, setCounter] = useState<number>(0);
 
-function getDevMenuHint() {
-  if (Platform.OS === 'web') {
-    return <ThemedText type="small">use browser devtools</ThemedText>;
-  }
-  if (Device.isDevice) {
-    return (
-      <ThemedText type="small">
-        shake device or press <ThemedText type="code">m</ThemedText> in terminal
-      </ThemedText>
-    );
-  }
-  const shortcut = Platform.OS === 'android' ? 'cmd+m (or ctrl+m)' : 'cmd+d';
   return (
-    <ThemedText type="small">
-      press <ThemedText type="code">{shortcut}</ThemedText>
-    </ThemedText>
-  );
-}
+    <SafeAreaView style={styles.safeArea}>
+      <View style={styles.container}>
+        <Text style={styles.appTitle}>Моя навчальна подорож 👋</Text>
+        <Text style={styles.counter}>Counter: {counter}</Text>
 
-export default function HomeScreen() {
-  return (
-    <ThemedView style={styles.container}>
-      <SafeAreaView style={styles.safeArea}>
-        <ThemedView style={styles.heroSection}>
-          <AnimatedIcon />
-          <ThemedText type="title" style={styles.title}>
-            Welcome to&nbsp;Expo
-          </ThemedText>
-        </ThemedView>
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity
+            activeOpacity={0.7}
+            style={styles.smallButton}
+            onPress={() => setCounter(counter + 1)}
+          >
+            <Text style={styles.smallButtonText}>Add</Text>
+          </TouchableOpacity>
 
-        <ThemedText type="code" style={styles.code}>
-          get started
-        </ThemedText>
+          <TouchableOpacity
+            activeOpacity={0.7}
+            style={styles.smallButton}
+            onPress={() => setCounter(counter - 1)}
+          >
+            <Text style={styles.smallButtonText}>Subtract</Text>
+          </TouchableOpacity>
+        </View>
 
-        <ThemedView type="backgroundElement" style={styles.stepContainer}>
-          <HintRow
-            title="Try editing"
-            hint={<ThemedText type="code">src/app/index.tsx</ThemedText>}
-          />
-          <HintRow title="Dev tools" hint={getDevMenuHint()} />
-          <HintRow
-            title="Fresh start"
-            hint={<ThemedText type="code">npm run reset-project</ThemedText>}
-          />
-        </ThemedView>
+        <View style={styles.navSection}>
+          <Link href="/city" asChild>
+            <TouchableOpacity activeOpacity={0.8} style={styles.navCard}>
+              <Ionicons name="business-outline" size={22} color="#fff" />
+              <Text style={styles.navCardText}>Моє місто</Text>
+            </TouchableOpacity>
+          </Link>
 
-        {Platform.OS === 'web' && <WebBadge />}
-      </SafeAreaView>
-    </ThemedView>
+          <Link href="/about" asChild>
+            <TouchableOpacity activeOpacity={0.8} style={styles.navCard}>
+              <Ionicons name="person-outline" size={22} color="#fff" />
+              <Text style={styles.navCardText}>Про мене</Text>
+            </TouchableOpacity>
+          </Link>
+        </View>
+      </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    flexDirection: 'row',
-  },
   safeArea: {
     flex: 1,
-    paddingHorizontal: Spacing.four,
-    alignItems: 'center',
-    gap: Spacing.three,
-    paddingBottom: BottomTabInset + Spacing.three,
-    maxWidth: MaxContentWidth,
+    backgroundColor: "#eef3f8",
   },
-  heroSection: {
-    alignItems: 'center',
-    justifyContent: 'center',
+  container: {
     flex: 1,
-    paddingHorizontal: Spacing.four,
-    gap: Spacing.four,
+    paddingHorizontal: 24,
+    paddingTop: 20,
   },
-  title: {
-    textAlign: 'center',
+  appTitle: {
+    fontSize: 26,
+    fontWeight: "bold",
+    color: "#1b3a5c",
+    textAlign: "center",
+    marginBottom: 8,
   },
-  code: {
-    textTransform: 'uppercase',
+  counter: {
+    fontSize: 20,
+    color: "#2f6fed",
+    fontWeight: "600",
+    textAlign: "center",
+    marginBottom: 12,
   },
-  stepContainer: {
-    gap: Spacing.three,
-    alignSelf: 'stretch',
-    paddingHorizontal: Spacing.three,
-    paddingVertical: Spacing.four,
-    borderRadius: Spacing.four,
+  buttonContainer: {
+    flexDirection: "row",
+    justifyContent: "center",
+    marginBottom: 30,
+  },
+  smallButton: {
+    backgroundColor: "#2f6fed",
+    paddingVertical: 10,
+    paddingHorizontal: 18,
+    borderRadius: 8,
+    marginHorizontal: 8,
+  },
+  smallButtonText: {
+    color: "#fff",
+    fontWeight: "bold",
+  },
+  navSection: {
+    gap: 14,
+  },
+  navCard: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#1b3a5c",
+    paddingVertical: 16,
+    borderRadius: 14,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.15,
+    shadowRadius: 4,
+    elevation: 3,
+  },
+  navCardText: {
+    color: "#fff",
+    fontSize: 18,
+    fontWeight: "600",
+    marginLeft: 10,
   },
 });
