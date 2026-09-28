@@ -1,0 +1,55 @@
+import { StyleSheet } from "react-native";
+
+/** Спільні стилі екранів входу та реєстрації */
+export const authStyles = StyleSheet.create({
+  safeArea: { flex: 1 },
+  keyboardView: { flex: 1 },
+  scrollContent: {
+    flexGrow: 1,
+    justifyContent: "center",
+    paddingHorizontal: 24,
+    paddingVertical: 32,
+  },
+  header: { alignItems: "center", marginBottom: 32 },
+  iconContainer: {
+    width: 80,
+    height: 80,
+    borderRadius: 24,
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 16,
+    elevation: 4,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.15,
+    shadowRadius: 8,
+  },
+  title: {
+    fontSize: 28,
+    fontWeight: "800",
+    marginBottom: 6,
+    textAlign: "center",
+  },
+  subtitle: { fontSize: 15, textAlign: "center" },
+  form: { gap: 14 },
+  button: {
+    flexDirection: "row",
+    borderRadius: 14,
+    paddingVertical: 16,
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 8,
+    marginTop: 8,
+    elevation: 3,
+  },
+  buttonDisabled: { opacity: 0.6 },
+  buttonText: { color: "#FFFFFF", fontSize: 17, fontWeight: "700" },
+  footer: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 28,
+  },
+  footerText: { fontSize: 15 },
+  footerLink: { fontSize: 15, fontWeight: "700" },
+});
